@@ -10,6 +10,7 @@ namespace Lamya.whackamole
 
         public static GameOver Instance;
         [SerializeField] private GameObject elements;
+        [SerializeField] private GameObject bg;
 
         private void Awake()
         {
@@ -24,7 +25,8 @@ namespace Lamya.whackamole
         public void GameEnded()
         {
             elements.SetActive(true);
-            //LeanTween.scale(elements, Vector3.one, 0.2f);
+            bg.SetActive(true);
+            LeanTween.scale(elements, Vector3.one, 0.2f);
 
         }
 

@@ -99,4 +99,11 @@ namespace Lamya.whackamole
 }
 
 
+/*
+ * 
+ * yield keyword??
+ * static gameobjects
+ * 
+ */
+
 
