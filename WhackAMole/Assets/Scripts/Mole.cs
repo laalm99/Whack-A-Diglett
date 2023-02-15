@@ -2,87 +2,100 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mole : MonoBehaviour
+namespace Lamya.whackamole
 {
-    private Vector3 startingPos;
-    [SerializeField] private float posY = 1f;
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private bool movingUp;
-    private Collider collider;
-    
-   // private float timer = 2f;
-
-    void Start()
+    public class Mole : MonoBehaviour
     {
-        collider = GetComponent<Collider>();
-        startingPos = transform.position;
-        collider.enabled = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //timer -= Time.deltaTime;
+        private Vector3 startingPos;
+        private Collider collider;
+        private bool movingUp;
+        [SerializeField] private float posY = 1f;
+        [SerializeField] private float speed = 5f;
+        [SerializeField] private float timer = 2f;
 
 
-        if (movingUp)
+        void Start()
         {
-            if (transform.position.y < posY)
+            collider = GetComponent<Collider>();
+            startingPos = transform.position;
+            collider.enabled = false;
+        }
+
+        void Update()
+        {
+            timer -= Time.deltaTime;
+            MovingAmimation(movingUp);
+        }
+
+
+
+        public void SetMovingUp(bool cond)
+        {
+            movingUp = cond;
+        }
+
+
+        private void MovingAmimation(bool movingup)
+        {
+            if (movingUp)
             {
-                MoveUp();
-                collider.enabled = true;
+                if (transform.position.y < posY)
+                {
+                    MoveUp();
+                    collider.enabled = true;
+                    timer = 1f;
+                }
+                else
+                {
+                    transform.position = new Vector3(startingPos.x, posY, startingPos.z);
+                }
             }
             else
             {
-                transform.position = new Vector3(startingPos.x, posY, startingPos.z);
+                if (transform.position.y > startingPos.y)
+                {
+                    MoveDown();
+                    collider.enabled = false;
+                }
+                else
+                {
+                    transform.position = startingPos;
+                }
+            }
+
+            if (timer <= 0 && !GameManager.Instance.GameEnded)
+            {
+                movingUp = false;
             }
         }
-        else
+
+        private void MoveUp()
         {
-            if (transform.position.y > startingPos.y)
-            {
-                MoveDown();
-                collider.enabled = false;
-            }
-            else
-            {
-                transform.position = startingPos;
-            }
+            transform.Translate(Vector3.up * speed * Time.deltaTime);
+        }
+        private void MoveDown()
+        {
+            transform.Translate(-Vector3.up * speed * Time.deltaTime);
         }
 
-    }
 
-    public void SetMovingUp(bool cond)
-    {
-        movingUp = cond;
-    }
-
-    private void MoveUp()
-    {
-        transform.Translate(Vector3.up * speed * Time.deltaTime);
-    }
-
-    private void MoveDown()
-    {
-        transform.Translate(-Vector3.up * speed * Time.deltaTime);
-    }
-
-    void OnMouseDown()
-    {
-        movingUp = false;
-        GameManager.Instance.IncreaseScore();
+        void OnMouseDown()
+        {
+            movingUp = false;
+            GameManager.Instance.IncreaseScore();
+        }
     }
 }
 
 
+
 /*
+ * #close collider for moles that are down
  * 
- * close collider for moles that are down
+ * #timer for moles that are up (timer in Mole script)
  * 
- * timer for moles that are down (timer in Mole script)
+ * ?flag for when the mole is up or down
  * 
- * flag for when the mole is up or down
- * 
- * 3d assets:
- * cgtrailer tablesquid .fpx .obj
+ * 3D assets:
+ * cgtrader  .fpx .obj
  */

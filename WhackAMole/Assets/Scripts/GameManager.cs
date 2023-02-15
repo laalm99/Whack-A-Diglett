@@ -4,74 +4,99 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace Lamya.whackamole
 {
-
-    public static GameManager Instance;
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI gameTimeText;
-    [SerializeField] private float gameTimer;
-    [SerializeField] public float timer;
-    private int score = 0;
-    private bool gameEnded = false;
-
-    //array of Moles
-    [SerializeField] Mole[] moles = new Mole[7];
-
-    private void Awake()
+    public class GameManager : MonoBehaviour
     {
-        if(Instance == null)
+
+        public static GameManager Instance;
+        [SerializeField] private TextMeshProUGUI scoreText;
+        [SerializeField] private TextMeshProUGUI gameTimeText;
+        [SerializeField] private float gameTimer;
+        [SerializeField] public float timer;
+        private float fixedTimer;
+
+        //array of Moles
+        [SerializeField] Mole[] moles = new Mole[7];
+
+        private int score;
+        int Score
         {
-            Instance = this;
-            return;
-        }
-        Destroy(gameObject);
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-       // gameTimer -= Time.deltaTime;
-       // timer -= Time.deltaTime;
-
-        if (gameTimer >= 0) {
-            gameTimer -= Time.deltaTime;
-            timer -= Time.deltaTime;
-            gameTimeText.text = gameTimer.ToString("00s");
-        }
-        else
-        {
-            gameTimer = 0;
-            gameEnded = true;
+            get => score;
+            set
+            {
+                score = value;
+                scoreText.text = score.ToString();
+            }
         }
 
-        if (timer <= 0 && !gameEnded)
+        private bool gameEnded = false;
+        public bool GameEnded => gameEnded;
+
+        private void Awake()
         {
-            RandomMole();
-            timer = 2f; //resets the time 
+            if (Instance == null)
+            {
+                Instance = this;
+                return;
+            }
+            Destroy(gameObject);
         }
 
-        if (gameTimer <= 0)
+        private void Start()
         {
-           for(int i=0; i<moles.Length; i++)
+            fixedTimer = timer;
+        }
+        // Update is called once per frame
+        void Update()
+        {
+            if (!gameEnded)
+            {
+                if (gameTimer > 0)
+                {
+                    gameTimer -= Time.deltaTime;
+                    timer -= Time.deltaTime;
+                    gameTimeText.text = gameTimer.ToString("00s");
+                }
+                else
+                {
+                    gameTimer = 0;
+                    gameEnded = true;
+                }
+
+                if (timer <= 0)
+                {
+                    RandomMole();
+                    timer = fixedTimer; //resets the time 
+                }
+            }
+            else
+            {
+                GameEnds();
+            }
+        }
+
+        public void IncreaseScore()
+        {
+            Score++;
+        }
+
+        private void RandomMole()
+        {
+            moles[(int)UnityEngine.Random.Range(0, moles.Length - 1)].SetMovingUp(true);
+        }
+
+        private void GameEnds()
+        {
+            for (int i = 0; i < moles.Length; i++)
             {
                 moles[i].SetMovingUp(false);
             }
-            score = 0;
-            gameEnded = true;
+            GameOver.Instance.GameEnded();
         }
-    }
 
-    public void IncreaseScore()
-    {
-        score++;
-        scoreText.text = score.ToString();
-    }
-
-    private void RandomMole()
-    {
-        moles[(int)UnityEngine.Random.Range(0,6)].SetMovingUp(true);
     }
 }
+
+
 
