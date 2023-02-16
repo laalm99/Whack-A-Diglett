@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ namespace Lamya.whackamole
         public static GameOver Instance;
         [SerializeField] private GameObject elements;
         [SerializeField] private GameObject bg;
+        [SerializeField] private TextMeshProUGUI highScoreText;
 
         private void Awake()
         {
@@ -22,8 +24,9 @@ namespace Lamya.whackamole
                 Destroy(gameObject);
         }
 
-        public void GameEnded()
+        public void GameEnded(int score)
         {
+            highScoreText.text = score.ToString();
             elements.SetActive(true);
             bg.SetActive(true);
             LeanTween.scale(elements, Vector3.one, 0.2f);

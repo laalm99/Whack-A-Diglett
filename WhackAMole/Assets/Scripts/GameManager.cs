@@ -29,7 +29,6 @@ namespace Lamya.whackamole
                 scoreText.text = score.ToString();
             }
         }
-
         private bool gameEnded = false;
         public bool GameEnded => gameEnded;
 
@@ -46,6 +45,7 @@ namespace Lamya.whackamole
         private void Start()
         {
             fixedTimer = timer;
+          
         }
         // Update is called once per frame
         void Update()
@@ -79,6 +79,10 @@ namespace Lamya.whackamole
         public void IncreaseScore()
         {
             Score++;
+            if (Score > PlayerPrefs.GetInt("highScore", 0)) 
+            {
+                PlayerPrefs.SetInt("highScore", Score);
+            }
         }
 
         private void RandomMole()
@@ -92,7 +96,7 @@ namespace Lamya.whackamole
             {
                 moles[i].SetMovingUp(false);
             }
-            GameOver.Instance.GameEnded();
+            GameOver.Instance.GameEnded(PlayerPrefs.GetInt("highScore", 0));
         }
 
     }
@@ -101,8 +105,22 @@ namespace Lamya.whackamole
 
 /*
  * 
- * yield keyword??
- * static gameobjects
+ * Pop up asking user to choose a difficulty:
+ *  1) Easy
+ *  2) Medium
+ *  3) Hard
+ *  
+ *  Easy Mode:
+ *      60s game, every 0.75 seconds a mole apears for 2 seconds, when clicked the score increases.
+ *      
+ *  Medium Mode:
+ *      60s game, every 0.5 seconds a mole apears for 1 second, when clicked the score increases.
+ *      
+ *  Hard Mode:
+ *      60s game,where the timer for the mole frequecy is decreases based on the player's score.
+ *      
+ *      
+ * #Keep a highscore.
  * 
  */
 

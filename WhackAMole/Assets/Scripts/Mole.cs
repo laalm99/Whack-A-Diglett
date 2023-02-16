@@ -71,11 +71,11 @@ namespace Lamya.whackamole
 
         private void MoveUp()
         {
-            transform.Translate(Vector3.up * speed * Time.deltaTime);
+            transform.Translate(speed * Time.deltaTime * Vector3.up);
         }
         private void MoveDown()
         {
-            transform.Translate(-Vector3.up * speed * Time.deltaTime);
+            transform.Translate(speed * Time.deltaTime * -Vector3.up);
         }
 
 
@@ -94,8 +94,8 @@ namespace Lamya.whackamole
  * 
  * #timer for moles that are up (timer in Mole script)
  * 
- * ?flag for when the mole is up or down
+ * add event system
  * 
- * 3D assets:
- * cgtrader  .fpx .obj
+ * add particlesystem
+ * 
  */

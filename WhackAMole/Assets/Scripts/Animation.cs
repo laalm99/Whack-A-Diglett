@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Animation : MonoBehaviour
+namespace Lamya.whackamole
 {
-   
-    void Start()
+    public class Animation : MonoBehaviour
     {
-        LeanTween.moveY(this.gameObject, 1.5f, 3).setLoopPingPong();
+
+        void Start()
+        {
+            LeanTween.moveY(this.gameObject, 1.5f, 3).setLoopPingPong();
+        }
     }
 }
+
