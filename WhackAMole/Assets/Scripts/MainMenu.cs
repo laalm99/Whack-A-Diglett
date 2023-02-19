@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 namespace Lamya.whackamole
 {
@@ -20,10 +21,19 @@ namespace Lamya.whackamole
 
         public void LevelPicker(int level)
         {
-
-            //GameManager.Instance.Level(level);
-            SceneManager.LoadScene(level);
+            PlayerPrefs.SetInt("level", level);
+            SceneManager.LoadScene(1);
         }
 
     }
 }
+
+
+/*
+ * 
+ * static
+ * 
+ * playerprefs
+ * 
+ * 
+ */

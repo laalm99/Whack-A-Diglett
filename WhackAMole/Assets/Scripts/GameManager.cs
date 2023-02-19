@@ -15,7 +15,7 @@ namespace Lamya.whackamole
         [SerializeField] private float gameTimer;
         [SerializeField] public float timer;
         private float fixedTimer;
-        //private int level;
+        private int level;
 
         //array of Moles
         [SerializeField] Mole[] moles = new Mole[7];
@@ -48,11 +48,15 @@ namespace Lamya.whackamole
             Mole.IncreaseScoreEvent += IncreaseScore;
 
             fixedTimer = timer;
-          
+            level = PlayerPrefs.GetInt("level");
+            Level(level);
+            
         }
+
         // Update is called once per frame
         void Update()
         {
+            
             if (!gameEnded)
             {
                 if (gameTimer > 0)
@@ -103,30 +107,32 @@ namespace Lamya.whackamole
             GameOver.Instance.GameEnded(PlayerPrefs.GetInt("highScore", 0));
         }
 
-        //public void Level(int l)
-        //{
-        //    level = l;
+        private void Level(int l)
+        {
+            if (l == 1)
+            {
+                fixedTimer = timer;
+            }
+            else if (l == 2)
+            {
+                timer = 0.5f;
+                fixedTimer = timer;
+                for (int i = 0; i < moles.Length; i++)
+                {
+                    moles[i].FixedTimer = 0.75f;
+                }
 
-        //    if (l == 1)
-        //    {
-        //        fixedTimer = timer;
-        //    }
-        //    else if (l == 2)
-        //    {
-        //        timer = 0.5f;
-        //        fixedTimer = timer;
-                
-        //        for (int i = 0; i < moles.Length; i++)
-        //        {
-        //            moles[i].FixedTimer = 1f;
-        //        }
-
-        //    }
-        //    else if(l == 3)
-        //    {
-        //        fixedTimer = timer;
-        //    }
-        //}
+            }
+            else if (l == 3)
+            {
+                timer = 0.25f;
+                fixedTimer = timer;
+                for (int i = 0; i < moles.Length; i++)
+                {
+                    moles[i].FixedTimer = 0.5f;
+                }
+            }
+        }
 
     }
 }

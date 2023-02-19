@@ -34,9 +34,9 @@ namespace Lamya.whackamole
         }
 
 
-        public void RestartGame(int level)
+        public void RestartGame()
         {
-            SceneManager.LoadScene(level);
+            SceneManager.LoadScene(1);
         }
 
         public void MainMenuLoad()
