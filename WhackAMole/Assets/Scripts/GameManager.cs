@@ -136,27 +136,3 @@ namespace Lamya.whackamole
 
     }
 }
-
-
-/*
- * 
- * Pop up asking user to choose a difficulty:
- *  1) Easy
- *  2) Medium
- *  3) Hard
- *  
- *  Easy Mode:
- *      60s game, every 0.75 seconds a mole apears for 2 seconds, when clicked the score increases.
- *      
- *  Medium Mode:
- *      60s game, every 0.5 seconds a mole apears for 1 second, when clicked the score increases.
- *      
- *  Hard Mode:
- *      60s game,where the timer for the mole frequecy is decreases based on the player's score.
- *      
- *      
- * #Keep a highscore.
- * 
- */
-
-

@@ -28,12 +28,3 @@ namespace Lamya.whackamole
     }
 }
 
-
-/*
- * 
- * static
- * 
- * playerprefs
- * 
- * 
- */
