@@ -33,6 +33,7 @@ namespace Lamya.whackamole
         private bool gameEnded = false;
         public bool GameEnded => gameEnded;
 
+
         private void Awake()
         {
             if (Instance == null)
