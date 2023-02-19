@@ -7,9 +7,23 @@ namespace Lamya.whackamole
 {
     public class MainMenu : MonoBehaviour
     {
+        [SerializeField] private GameObject levelPicker;
+        [SerializeField] private GameObject playButton;
+
         public void PlayButton()
         {
-            SceneManager.LoadScene(1);
+            
+            playButton.SetActive(false);
+            levelPicker.SetActive(true);
+           
         }
+
+        public void LevelPicker(int level)
+        {
+
+            //GameManager.Instance.Level(level);
+            SceneManager.LoadScene(level);
+        }
+
     }
 }

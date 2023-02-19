@@ -15,6 +15,7 @@ namespace Lamya.whackamole
         [SerializeField] private float gameTimer;
         [SerializeField] public float timer;
         private float fixedTimer;
+        //private int level;
 
         //array of Moles
         [SerializeField] Mole[] moles = new Mole[7];
@@ -44,6 +45,8 @@ namespace Lamya.whackamole
 
         private void Start()
         {
+            Mole.IncreaseScoreEvent += IncreaseScore;
+
             fixedTimer = timer;
           
         }
@@ -78,6 +81,7 @@ namespace Lamya.whackamole
 
         public void IncreaseScore()
         {
+           
             Score++;
             if (Score > PlayerPrefs.GetInt("highScore", 0)) 
             {
@@ -98,6 +102,31 @@ namespace Lamya.whackamole
             }
             GameOver.Instance.GameEnded(PlayerPrefs.GetInt("highScore", 0));
         }
+
+        //public void Level(int l)
+        //{
+        //    level = l;
+
+        //    if (l == 1)
+        //    {
+        //        fixedTimer = timer;
+        //    }
+        //    else if (l == 2)
+        //    {
+        //        timer = 0.5f;
+        //        fixedTimer = timer;
+                
+        //        for (int i = 0; i < moles.Length; i++)
+        //        {
+        //            moles[i].FixedTimer = 1f;
+        //        }
+
+        //    }
+        //    else if(l == 3)
+        //    {
+        //        fixedTimer = timer;
+        //    }
+        //}
 
     }
 }

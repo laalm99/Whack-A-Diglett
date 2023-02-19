@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,16 @@ namespace Lamya.whackamole
         [SerializeField] private float posY = 1f;
         [SerializeField] private float speed = 5f;
         [SerializeField] private float timer = 2f;
+        private float fixedTimer;
+        public float FixedTimer
+        {
+            get  => fixedTimer;
+            set
+            {
+                fixedTimer = value;
+            }
+        }
+        public static event Action IncreaseScoreEvent;
 
 
         void Start()
@@ -19,12 +30,13 @@ namespace Lamya.whackamole
             collider = GetComponent<Collider>();
             startingPos = transform.position;
             collider.enabled = false;
+            fixedTimer = timer;
         }
 
         void Update()
         {
             timer -= Time.deltaTime;
-            MovingAmimation(movingUp);
+            MovingAnimation(movingUp);
         }
 
 
@@ -35,7 +47,7 @@ namespace Lamya.whackamole
         }
 
 
-        private void MovingAmimation(bool movingup)
+        private void MovingAnimation(bool movingup)
         {
             if (movingUp)
             {
@@ -43,7 +55,7 @@ namespace Lamya.whackamole
                 {
                     MoveUp();
                     collider.enabled = true;
-                    timer = 1f;
+                    timer = fixedTimer;
                 }
                 else
                 {
@@ -82,7 +94,7 @@ namespace Lamya.whackamole
         void OnMouseDown()
         {
             movingUp = false;
-            GameManager.Instance.IncreaseScore();
+            IncreaseScoreEvent?.Invoke();
         }
     }
 }
